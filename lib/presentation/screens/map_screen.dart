@@ -12,10 +12,14 @@ class MapScreen extends StatelessWidget {
     return Scaffold(
       body: GoogleMap(
         markers: {
-          const Marker(
-            markerId: MarkerId('value'),
-            position: LatLng(42.8746, 74.5698),
-          ),
+          Marker(
+              markerId: MarkerId('value'),
+              position: LatLng(42.87437, 74.603548),
+              infoWindow: InfoWindow(
+                  title: 'Памятник Ч. Айтматову',
+                  onTap: () {
+                    print('object');
+                  })),
         },
         mapType: MapType.normal,
         zoomControlsEnabled: false,
