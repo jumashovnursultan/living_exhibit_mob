@@ -517,6 +517,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  video_360:
+    dependency: "direct main"
+    description:
+      name: video_360
+      sha256: a32863d2b47a6cf86b9afaf00eaae59c8b609a850945173bdabc8a9b1af35d19
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   vm_service:
     dependency: transitive
     description:

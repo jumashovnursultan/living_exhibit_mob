@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:video_360/video_360.dart';
 
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class VideoPlayerScreen extends StatefulWidget {
+  @override
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+}
+
+class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+  Video360Controller? controller;
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final GlobalKey _globalKey = GlobalKey(debugLabel: 'QR');
-
-    return const Scaffold(body: Text('home screen'));
+    return Scaffold(
+      appBar: AppBar(title: Text('Video Player')),
+      body: Video360View(
+        onVideo360ViewCreated: (controller) {
+          this.controller = controller;
+        },
+        url: 'https://rnvcz-185-117-151-203.a.free.pinggy.link/video',
+        onPlayInfo: (Video360PlayInfo info) {
+          // print(info.)
+          //chyngyzaitmatovexhibit
+        },
+      ),
+    );
   }
 }
