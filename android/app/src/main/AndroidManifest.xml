@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="living_exhibit_mob"
+        android:label="Scan History"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

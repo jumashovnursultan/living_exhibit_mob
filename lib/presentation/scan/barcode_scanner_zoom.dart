@@ -19,31 +19,34 @@ class _BarcodeScannerWithZoomState extends State<BarcodeScannerWithZoom> {
     torchEnabled: false,
   );
 
+  bool isOpenVideoPlayerScreen = false;
+
   @override
   void initState() {
     super.initState();
 
-    controller.start();
+    // controller.start();
 
-    controller.addListener(() async {
-      final barcodes = controller.barcodes;
-      final barcode = await barcodes.first;
-      // print(barcode.raw);
-      // print(barcode.image);
-      // print(barcode.size);
-      // print(barcodes);
-
-      // if (mounted && barcode.barcodes.first.displayValue != null) {
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => VideoPlayerScreen(
-      //         videoUrl: barcode.barcodes.first.displayValue!,
-      //       ),
-      //     ),
-      //   );
-      // }
-    });
+    // controller.addListener(() async {
+    //   final barcodes = controller.barcodes;
+    //   final barcode = await barcodes.first;
+    //   if (mounted &&
+    //       barcode.barcodes.isNotEmpty &&
+    //       barcode.barcodes.firstOrNull != null &&
+    //       barcode.barcodes.first.displayValue != null &&
+    //       !isOpenVideoPlayerScreen) {
+    //     isOpenVideoPlayerScreen = true;
+    //     await Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => VideoPlayerScreen(
+    //           videoUrl: barcode.barcodes.first.displayValue!,
+    //         ),
+    //       ),
+    //     );
+    //     isOpenVideoPlayerScreen = true;
+    //   }
+    // });
   }
 
   @override
@@ -59,29 +62,54 @@ class _BarcodeScannerWithZoomState extends State<BarcodeScannerWithZoom> {
       body: Stack(
         children: [
           MobileScanner(
-            onDetect: (v) {
-              print(v.barcodes.map((e) => e.calendarEvent?.description));
-              print(v.barcodes.map((e) => e.calendarEvent?.summary));
-              print(v.barcodes.map((e) => e.calendarEvent?.status));
-              print(v.barcodes.map((e) => e.calendarEvent?.organizer));
-              print(v.barcodes.map((e) => e.contactInfo?.title));
-              print(v.barcodes.map((e) => e.contactInfo?.urls));
-              print(v.barcodes.map((e) => e.corners));
-              print(v.barcodes.map((e) => e.displayValue));
-              print(v.barcodes.map((e) => e.format.name));
-              print(v.barcodes.map((e) => e.rawBytes));
-              print(v.barcodes.map((e) => e.rawValue));
-              print(v.barcodes.map((e) => e.url?.title));
-              print(v.barcodes.map((e) => e.url?.url));
-              print(v.barcodes.map((e) => e.wifi?.encryptionType));
-              print(v.barcodes.map((e) => e.wifi?.password));
-              print(v.barcodes.map((e) => e.wifi?.ssid));
+            onDetect: (value) async {
+              print(value);
+              if (mounted &&
+                  value.barcodes.isNotEmpty &&
+                  value.barcodes.firstOrNull != null &&
+                  value.barcodes.first.displayValue != null &&
+                  !isOpenVideoPlayerScreen) {
+                isOpenVideoPlayerScreen = true;
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VideoPlayerScreen(
+                      videoUrl: value.barcodes.first.displayValue!,
+                    ),
+                  ),
+                );
+
+                isOpenVideoPlayerScreen = false;
+              }
+              // print(v.barcodes.map((e) => e.calendarEvent?.description));
+              // print(v.barcodes.map((e) => e.calendarEvent?.summary));
+              // print(v.barcodes.map((e) => e.calendarEvent?.status));
+              // print(v.barcodes.map((e) => e.calendarEvent?.organizer));
+              // print(v.barcodes.length);
+              // print(v.barcodes.map((e) => e.rawValue));
+              // print(v.barcodes.map((e) => e.url?.url));
+              // print(v.barcodes.map((e) => e.displayValue));
+
+              // print(v.barcodes.map((e) => e.contactInfo?.title));
+
+              // print(v.barcodes.map((e) => e.contactInfo?.urls));
+              // print(v.barcodes.map((e) => e.corners));
+              // print(v.barcodes.map((e) => e.displayValue));
+              // print(v.barcodes.map((e) => e.format.name));
+              // print(v.barcodes.map((e) => e.rawBytes));
+              // print(v.barcodes.map((e) => e.rawValue));
+
+              // print(v.barcodes.map((e) => e.url?.title));
+
+              // print(v.barcodes.map((e) => e.wifi?.encryptionType));
+              // print(v.barcodes.map((e) => e.wifi?.password));
+              // print(v.barcodes.map((e) => e.wifi?.ssid));
             },
             controller: controller,
             // fit: BoxFit.contain,
-            errorBuilder: (context, error, child) {
-              return ScannerErrorWidget(error: error);
-            },
+            // errorBuilder: (context, error, child) {
+            //   return ScannerErrorWidget(error: error);
+            // },
           ),
           _buildScanWindow(scanWindow),
           Align(
@@ -162,9 +190,9 @@ class _BarcodeScannerWithZoomState extends State<BarcodeScannerWithZoom> {
     );
   }
 
-  @override
-  Future<void> dispose() async {
-    super.dispose();
-    await controller.dispose();
-  }
+  // @override
+  // Future<void> dispose() async {
+  //   super.dispose();
+  //   await controller.dispose();
+  // }
 }
